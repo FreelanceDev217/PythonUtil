@@ -668,3 +668,13 @@ class webauto_base():
             return ''
 
     # solve image-captcha automatically and return the result
+    def solve_img_captcha(self, img_path, xpath_result):
+        global ANTICAPTCHA_KEY
+        try:
+            api_key = ANTICAPTCHA_KEY
+            client = anticap.AnticaptchaClient(api_key)
+            fp = open(img_path, 'rb')
+            task = anticap.ImageToTextTask(fp)
+            job = client.createTask(task)
+            job.join()
+            ret = ''
