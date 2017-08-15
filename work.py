@@ -678,3 +678,8 @@ class webauto_base():
             job = client.createTask(task)
             job.join()
             ret = ''
+            while(ret == ''): # wait for the solve job to be finished
+                ret = job.get_captcha_text()
+                self.delay_me(1)
+            self.set_value(xpath_result, ret)
+            return True
