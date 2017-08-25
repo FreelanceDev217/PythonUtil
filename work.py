@@ -683,3 +683,53 @@ class webauto_base():
                 self.delay_me(1)
             self.set_value(xpath_result, ret)
             return True
+        except Exception as e:
+            print('solving captcha failed:' + str(e))
+            return False
+
+    # check if there is an element in the specified xpath
+    def is_element_present(self, xpath):
+        try:
+            elem = self.browser.find_element_by_xpath(xpath)
+            if elem is None:
+                return False
+            return True
+        except:
+            return False
+
+    def enter_text(self, xpath, value, timeout = 3, manual = True):
+        try:
+            now = time.time()
+            future = now + timeout
+            while time.time() < future:
+                target = self.browser.find_element_by_xpath(xpath)
+                if target is not None:
+                    if manual:
+                        target.send_keys(Keys.CONTROL + "a")
+                        target.send_keys(value)
+                        break
+                    else:
+                        js = "arguments[0].value = '%s'" % (value)
+                        self.browser.execute_async_script(js, target)
+            return True
+        except Exception as e:
+            self.log_error(str(e))
+            return False
+
+    def wait_present(self, xpath, timeout = 2):
+        try:
+            now = time.time()
+            future = now + timeout
+            while time.time() < future:
+                try:
+                    target = self.browser.find_element_by_xpath(xpath)
+                    if target is not None:
+                        return True
+                except:
+                    pass
+            return False
+        except Exception as e:
+            self.log_error(str(e))(str(e))
+            return False
+
+    def wait_unpresent(self, xpath, timeout = 3):
