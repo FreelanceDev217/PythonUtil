@@ -1148,3 +1148,8 @@ class webauto_base():
             self.browser.execute_script("window.open('%s','_blank');"%url)
         except:
             return
+
+    # refresh the browser
+    def refresh(self):
+        self.browser.refresh()
+
