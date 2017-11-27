@@ -1153,3 +1153,53 @@ class webauto_base():
     def refresh(self):
         self.browser.refresh()
 
+    # wait for <timeout> seconds
+    def delay_me(self, timeout = 3):
+        try:
+            now = time.time()
+            future = now + timeout
+            while time.time() < future:
+                pass
+            return True
+        except Exception as e:
+            return False
+
+    # let the browser to wait for <timeout> seconds
+    def delay(self, timeout = 3):
+        self.browser.implicitly_wait(timeout)
+        
+    # number of occurences for specified xpath
+    def occurence(self, xpath):
+        try:
+            elems = self.browser.find_elements_by_xpath(xpath)
+            return len(elems)
+        except:
+            return 0
+
+    # get base64 encoding of image from xpath
+    def get_base64_from_image(self, xpath_img):
+        try:
+            js = """
+                xpath="%s";
+                img=document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;             ;
+                var canvas = document.createElement('canvas');
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                var dataURL = canvas.toDataURL('image/png');
+                return dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
+                """%(xpath_img)
+            res = self.browser.execute_script(js)
+            return res
+        except Exception as e:
+            print(js)
+            print(str(e))
+            return ''
+
+    # solve image-captcha automatically and return the result
+    def solve_img_captcha(self, img_path, xpath_result):
+        global ANTICAPTCHA_KEY
+        try:
+            api_key = ANTICAPTCHA_KEY
+            client = anticap.AnticaptchaClient(api_key)
