@@ -1378,3 +1378,8 @@ class webauto_base():
         url = "https://www.whatismybrowser.com/guides/the-latest-version/chrome"
         response = requests.request("GET", url)
 
+        soup = bs(response.text, 'html.parser')
+        rows = soup.select('td strong')
+        version = {}
+        version['windows'] = rows[0].parent.next_sibling.next_sibling.text
+        version['macos'] = rows[1].parent.next_sibling.next_sibling.text
