@@ -688,3 +688,13 @@ class webauto_base():
         try:
             elems = self.browser.find_elements_by_xpath(xpath)
             return len(elems)
+        except:
+            return 0
+
+    # get base64 encoding of image from xpath
+    def get_base64_from_image(self, xpath_img):
+        try:
+            js = """
+                xpath="%s";
+                img=document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;             ;
+                var canvas = document.createElement('canvas');
