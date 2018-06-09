@@ -793,3 +793,8 @@ class webauto_base():
     def expand_shadow_element(self, element):
         try:
             shadow_root = self.browser.execute_script('return arguments[0].shadowRoot', element)
+# Abstract web automation class
+# 2019.09 David
+
+import time
+from selenium import webdriver
