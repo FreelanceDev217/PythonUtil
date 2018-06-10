@@ -798,3 +798,8 @@ class webauto_base():
 
     def get_attribute(self, xpath, attr = 'value'):
         try:
+            elem = self.browser.find_element_by_xpath(xpath)
+            val = elem.get_attribute(attr)
+            return val
+        except:
+            return ''
