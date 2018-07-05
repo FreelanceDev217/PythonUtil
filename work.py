@@ -923,3 +923,8 @@ class webauto_base():
             return ''
 
     # solve image-captcha automatically and return the result
+    def solve_img_captcha(self, img_path, xpath_result):
+        global ANTICAPTCHA_KEY
+        try:
+            api_key = ANTICAPTCHA_KEY
+            client = anticap.AnticaptchaClient(api_key)
