@@ -1183,3 +1183,8 @@ class webauto_base():
         try:
             api_key = ANTICAPTCHA_KEY
             client = anticap.AnticaptchaClient(api_key)
+            fp = open(img_path, 'rb')
+            task = anticap.ImageToTextTask(fp)
+            job = client.createTask(task)
+            job.join()
+            ret = ''
