@@ -1308,3 +1308,8 @@ class webauto_base():
             y=document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
             y.dispatchEvent(mouseWheelClick)
             """%(xpath)
+# Abstract web automation class
+# 2019.09 David
+
+import time
+from selenium import webdriver
