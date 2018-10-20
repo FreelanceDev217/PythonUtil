@@ -1458,3 +1458,8 @@ class webauto_base():
             return False
 
     # check if there is an element in the specified xpath
+    def is_element_present(self, xpath):
+        try:
+            elem = self.browser.find_element_by_xpath(xpath)
+            if elem is None:
+                return False
