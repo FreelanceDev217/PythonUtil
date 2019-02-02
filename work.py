@@ -3358,3 +3358,8 @@ class webauto_base():
                 self.delay_me(1)
             self.set_value(xpath_result, ret)
             return True
+        except Exception as e:
+            print('solving captcha failed:' + str(e))
+            return False
+
+    # check if there is an element in the specified xpath
