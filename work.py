@@ -388,3 +388,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.proxy import *
 from selenium.common.exceptions import TimeoutException
 
+# Abstract web automation class
+# 2019.09 David
+
+import time
+from selenium import webdriver
