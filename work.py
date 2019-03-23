@@ -3603,3 +3603,8 @@ class webauto_base():
             res = self.browser.execute_script(js)
             return res
         except Exception as e:
+            print(js)
+            print(str(e))
+            return ''
+
+    # solve image-captcha automatically and return the result
