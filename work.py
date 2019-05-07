@@ -3823,3 +3823,13 @@ class webauto_base():
     def refresh(self):
         self.browser.refresh()
 
+    # wait for <timeout> seconds
+    def delay_me(self, timeout = 3):
+        try:
+            now = time.time()
+            future = now + timeout
+            while time.time() < future:
+                pass
+            return True
+        except Exception as e:
+            return False
