@@ -1043,3 +1043,23 @@ class webauto_base():
     def click_element(self, xpath, timeout = 3, mode = 1):
         try:
             now = time.time()
+            future = now + timeout
+            while time.time() < future:
+                target = self.browser.find_element_by_xpath(xpath)
+                if target is not None:
+                    if mode == 0:
+                        target.click()
+                    elif mode == 1:
+                        js = """
+                            xpath = "%s";
+                            y=document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+                            y.click()
+                            """%(xpath)
+                        self.browser.execute_script(js)
+                    return True
+            return False
+        except Exception as e:
+            self.log_error(str(e))
+
+    def middle_click(self, xpath, timeout = 3):
+        js = """
